@@ -1,0 +1,5 @@
+/Users/shashank/Desktop/projects/pico/major-project/build/pioasm-install/pioasm/pioasm
+/Users/shashank/Desktop/projects/pico/major-project/build/pioasm-install/pioasm/pioasmTargets.cmake
+/Users/shashank/Desktop/projects/pico/major-project/build/pioasm-install/pioasm/pioasmTargets-release.cmake
+/Users/shashank/Desktop/projects/pico/major-project/build/pioasm-install/pioasm/pioasmConfig.cmake
+/Users/shashank/Desktop/projects/pico/major-project/build/pioasm-install/pioasm/pioasmConfigVersion.cmake

@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/shashank/Desktop/projects/pico/major-project/build/CMakeFiles/picotoolBuild"
+		},
+		{
+			"file" : "/Users/shashank/Desktop/projects/pico/major-project/build/CMakeFiles/picotoolBuild.rule"
+		},
+		{
+			"file" : "/Users/shashank/Desktop/projects/pico/major-project/build/CMakeFiles/picotoolBuild-complete.rule"
+		},
+		{
+			"file" : "/Users/shashank/Desktop/projects/pico/major-project/build/picotool/src/picotoolBuild-stamp/picotoolBuild-build.rule"
+		},
+		{
+			"file" : "/Users/shashank/Desktop/projects/pico/major-project/build/picotool/src/picotoolBuild-stamp/picotoolBuild-configure.rule"
+		},
+		{
+			"file" : "/Users/shashank/Desktop/projects/pico/major-project/build/picotool/src/picotoolBuild-stamp/picotoolBuild-download.rule"
+		},
+		{
+			"file" : "/Users/shashank/Desktop/projects/pico/major-project/build/picotool/src/picotoolBuild-stamp/picotoolBuild-install.rule"
+		},
+		{
+			"file" : "/Users/shashank/Desktop/projects/pico/major-project/build/picotool/src/picotoolBuild-stamp/picotoolBuild-mkdir.rule"
+		},
+		{
+			"file" : "/Users/shashank/Desktop/projects/pico/major-project/build/picotool/src/picotoolBuild-stamp/picotoolBuild-patch.rule"
+		},
+		{
+			"file" : "/Users/shashank/Desktop/projects/pico/major-project/build/picotool/src/picotoolBuild-stamp/picotoolBuild-test.rule"
+		},
+		{
+			"file" : "/Users/shashank/Desktop/projects/pico/major-project/build/picotool/src/picotoolBuild-stamp/picotoolBuild-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"picotoolBuild"
+		],
+		"name" : "picotoolBuild"
+	}
+}
