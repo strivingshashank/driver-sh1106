@@ -5,29 +5,29 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include(pico_sdk_import.cmake)
 
-project(major-project C CXX ASM)
+project(sh1106 C CXX ASM)
 
 pico_sdk_init()
 
-add_executable(major-project
-        src/sh1106_i2c
-        src/ssd1306.c
+add_executable(sh1106
         src/main.c
+        src/log.c
+        src/sh1106.c
         src/onboard_led.c
 )
 
-target_link_libraries(major-project
+target_link_libraries(sh1106
         pico_stdlib
         hardware_i2c
         pico_cyw43_arch_none
 )
 
-target_include_directories(major-project PRIVATE
+target_include_directories(sh1106 PRIVATE
         include
         # $(CMAKE_CURRENT_LIST_DIR)/include
 )
 
-pico_enable_stdio_usb(major-project 1)
-pico_enable_stdio_uart(major-project 0)
+pico_enable_stdio_usb(sh1106 1)
+pico_enable_stdio_uart(sh1106 0)
 
-pico_add_extra_outputs(major-project)
+pico_add_extra_outputs(sh1106)
