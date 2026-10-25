@@ -1,5 +1,5 @@
 #include "log.h"
-#include "sh1106.h"
+#include "sh1106_core.h"
 
 #include <assert.h>
 #include <hardware/gpio.h>
@@ -87,6 +87,27 @@ void demo3(sh1106_t *disp) {
 
 			sh1106_invert_pixel(disp, x, y);
 		}
+		sh1106_flush(disp);
+	}
+}
+
+void demo4(sh1106_t *disp) {
+	assert(disp);
+
+	srand(get_absolute_time());
+	while (true) {
+		for (int y = 0; y < SH1106_HEIGHT; y++) {
+			for (int x = 0; x < SH1106_WIDTH; x++) {
+				sh1106_draw_pixel(disp, x, y);
+			}
+			sh1106_flush(disp);
+			// uint8_t x = rand() % SH1106_WIDTH;
+			// uint8_t y = rand() % SH1106_HEIGHT;
+
+			// sh1106_invert_pixel(disp, x, y);
+		}
+		sleep_ms(100);
+		sh1106_clear_screen(disp);
 		sh1106_flush(disp);
 	}
 }
