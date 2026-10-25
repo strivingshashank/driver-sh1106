@@ -12,8 +12,7 @@ pico_sdk_init()
 add_executable(sh1106
         src/main.c
         src/log.c
-        src/sh1106.c
-        src/onboard_led.c
+        src/sh1106_core.c
 )
 
 target_link_libraries(sh1106
