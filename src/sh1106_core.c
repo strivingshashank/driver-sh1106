@@ -1,4 +1,4 @@
-#include "sh1106.h"
+#include "sh1106_core.h"
 
 #include <assert.h>
 #include <string.h>

@@ -1,6 +1,6 @@
 /* SH1106 OLED (I2C) driver for the Raspberry Pi Pico. */
-#ifndef PI_PICO_SH1106_H
-#define PI_PICO_SH1106_H
+#ifndef PI_PICO_SH1106_CORE_H
+#define PI_PICO_SH1106_CORE_H
 
 #include <hardware/i2c.h>
 
@@ -54,4 +54,4 @@ void sh1106_clear_pixel(sh1106_t *disp, uint8_t x, uint8_t y);
 /* Inverts a pixel. Out-of-range coordinates are ignored. */
 void sh1106_invert_pixel(sh1106_t *disp, uint8_t x, uint8_t y);
 
-#endif /* PI_PICO_SH1106_H */
+#endif /* PI_PICO_SH1106_CORE_H */
