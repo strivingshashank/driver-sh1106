@@ -27,27 +27,26 @@ typedef struct {
 	uint8_t page;
 	uint8_t byte;
 	uint8_t bit;
-	bool valid;
 } sh1106_display_pos_t;
 
-/* Converts `x` and `y` to `sh1106_display_pos_t` representaion.
- * Sets `valid` as false if out-of-range.
+/* Sets `pos` corresponding to `x` and `y`.
+ * Returns true if x and y are in bound, false otherwise.
  */
-static sh1106_display_pos_t sh1106_get_pos(uint8_t x, uint8_t y) {
-	sh1106_display_pos_t pos = {0};
+static bool sh1106_get_pos(int x, int y, sh1106_display_pos_t *pos) {
+	assert(pos);
 
-	bool out_of_bound = (SH1106_WIDTH <= x) || (SH1106_HEIGHT <= y);
-	if (out_of_bound) {
-		pos.valid = false;
-		return pos;
+	bool valid_x = (0 <= x) && (x < SH1106_WIDTH);
+	bool valid_y = (0 <= y) && (y < SH1106_HEIGHT);
+	bool valid_xy = valid_x && valid_y;
+	if (!valid_xy) {
+		return false;
 	}
 
-	pos.page = y / 8;
-	pos.byte = x;
-	pos.bit = y % 8;
-	pos.valid = true;
+	pos->page = y / 8;
+	pos->byte = x;
+	pos->bit = y % 8;
 
-	return pos;
+	return true;
 }
 
 /* Writes data to the display over I2C.
@@ -161,32 +160,25 @@ void sh1106_clear_screen(sh1106_t *disp) {
 	memset(disp->buffer, 0, sizeof(disp->buffer));
 }
 
-void sh1106_draw_pixel(sh1106_t *disp, uint8_t x, uint8_t y) {
+void sh1106_set_pixel(sh1106_t *disp, int x, int y, sh1106_color_t color) {
 	assert(disp);
 
-	sh1106_display_pos_t pos = sh1106_get_pos(x, y);
-	if (!pos.valid) {
+	sh1106_display_pos_t pos = {0};
+	if (sh1106_get_pos(x, y, &pos)) {
 		return;
 	}
-	disp->buffer[pos.page][pos.byte] |= (1 << pos.bit);
-}
 
-void sh1106_clear_pixel(sh1106_t *disp, uint8_t x, uint8_t y) {
-	assert(disp);
-
-	sh1106_display_pos_t pos = sh1106_get_pos(x, y);
-	if (!pos.valid) {
-		return;
+	switch (color) {
+	case SH1106_BLACK:
+		disp->buffer[pos.page][pos.byte] &= ~(1 << pos.bit);
+		break;
+	case SH1106_WHITE:
+		disp->buffer[pos.page][pos.byte] |= (1 << pos.bit);
+		break;
+	case SH1106_INVERT:
+		disp->buffer[pos.page][pos.byte] ^= (1 << pos.bit);
+		break;
+	default:
+		break;
 	}
-	disp->buffer[pos.page][pos.byte] &= ~(1 << pos.bit);
-}
-
-void sh1106_invert_pixel(sh1106_t *disp, uint8_t x, uint8_t y) {
-	assert(disp);
-
-	sh1106_display_pos_t pos = sh1106_get_pos(x, y);
-	if (!pos.valid) {
-		return;
-	}
-	disp->buffer[pos.page][pos.byte] ^= (1 << pos.bit);
 }

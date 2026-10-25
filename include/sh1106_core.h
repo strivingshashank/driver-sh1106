@@ -8,6 +8,12 @@
 #define SH1106_HEIGHT 64 			/* Visible rows, in pixels. */
 #define SH1106_PAGES (SH1106_HEIGHT / 8) 	/* Each page is a row of 8 pixels. */
 
+typedef enum {
+	SH1106_BLACK, /* Turn OFF a pixel. */
+	SH1106_WHITE, /* Turn ON a pixel. */
+	SH1106_INVERT /* Invert a pixel. */
+} sh1106_color_t;
+
 /* A display instance. Drawing functions only modifies `buffer`;
  * call `sh1106_flush()` to send it to the display.
  */
@@ -31,27 +37,27 @@ void sh1106_flush(const sh1106_t *disp);
 /* Turns display ON. */
 void sh1106_display_on(const sh1106_t *disp);
 
-/* Turns display OFF. */
+/* Turns display OFF.
+ * Retains display content.
+ */
 void sh1106_display_off(const sh1106_t *disp);
 
 /* Set display contrast.
- * Contrast level ranges from 0 to 255.
+ * Contrast level ranges from 0 (dimmest) to 255 (brightest).
+ * To turn off the display, use `sh1106_display_off()`.
  */
 void sh1106_set_contrast(const sh1106_t *disp, uint8_t level);
 
-/* Turns ON all the pixels in the buffer. */
+/* Turns ON all the pixels in the buffer.
+ */
 void sh1106_fill_screen(sh1106_t *disp);
 
 /* Turns OFF all the pixels in the buffer. */
 void sh1106_clear_screen(sh1106_t *disp);
 
-/* Turns a pixel ON. Out-of-range coordinates are ignored. */
-void sh1106_draw_pixel(sh1106_t *disp, uint8_t x, uint8_t y);
-
-/* Turns a pixel OFF. Out-of-range coordinates are ignored. */
-void sh1106_clear_pixel(sh1106_t *disp, uint8_t x, uint8_t y);
-
-/* Inverts a pixel. Out-of-range coordinates are ignored. */
-void sh1106_invert_pixel(sh1106_t *disp, uint8_t x, uint8_t y);
+/* Set a `sh1106_color_t` for a pixel.
+ * If pixel is out of bound, it is ignored.
+ */
+void sh1106_set_pixel(sh1106_t *disp, int x, int y, sh1106_color_t color);
 
 #endif /* PI_PICO_SH1106_CORE_H */
