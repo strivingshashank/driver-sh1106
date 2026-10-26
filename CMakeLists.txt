@@ -14,6 +14,7 @@ add_executable(sh1106
         src/log.c
         src/sh1106_core.c
         src/sh1106_gfx.c
+        src/demo.c
 )
 
 target_link_libraries(sh1106
