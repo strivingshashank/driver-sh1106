@@ -1,5 +1,6 @@
 #include "log.h"
 #include "sh1106_core.h"
+#include "sh1106_gfx.h"
 
 #include <assert.h>
 #include <hardware/gpio.h>
@@ -7,6 +8,7 @@
 #include <limits.h>
 #include <pico/cyw43_arch.h>
 #include <pico/platform/common.h>
+#include <pico/platform/compiler.h>
 #include <pico/stdio.h>
 #include <pico/stdio_usb.h>
 #include <pico/stdlib.h>
@@ -26,89 +28,17 @@
 #define SDA_PIN 4
 #define SCL_PIN 5
 
-void demo1(sh1106_t *disp) {
-	assert(disp);
-
-	// sh1106_fill_screen(disp);
-	// sh1106_flush(disp);
-	while (true) {
-		for (uint8_t y = 0; y < SH1106_HEIGHT; y++) {
-			for (uint8_t x = 0; x < SH1106_WIDTH; x++) {
-				sh1106_draw_pixel(disp, x, y);
-			}
-			sh1106_flush(disp);
-		}
-		sleep_ms(250);
-
-		// sh1106_display_off(disp);
-		// // sh1106_clear_screen(disp);
-		// // sh1106_flush(disp);
-		// sleep_ms(100);
-		// sh1106_display_on(disp);
-		// // sh1106_fill_screen(disp);
-		// // sh1106_flush(disp);
-		// sleep_ms(100);
-	}
-}
-
-void demo2(sh1106_t *disp) {
-	assert(disp);
-
-	sh1106_fill_screen(disp);
-	sh1106_flush(disp);
-	while (true) {
-		// for (uint8_t i = 0; i < UINT8_MAX; i++) {
-		// 	sh1106_set_contrast(disp, i);
-		// 	sleep_ms(20);
-		// }
-
-		sleep_ms(500);
-		sh1106_set_contrast(disp, 0);
-		sleep_ms(500);
-		sh1106_set_contrast(disp, 33);
-		sleep_ms(500);
-		sh1106_set_contrast(disp, 66);
-		sleep_ms(500);
-		sh1106_set_contrast(disp, 100);
-		sleep_ms(500);
-		sh1106_set_contrast(disp, UINT8_MAX);
-		sleep_ms(500);
-	}
-}
-
-void demo3(sh1106_t *disp) {
+void demo_draw_line(sh1106_t *disp) {
 	assert(disp);
 
 	srand(get_absolute_time());
+
 	while (true) {
-		for (int i = 0; i < 5000; i++) {
-			uint8_t x = rand() % SH1106_WIDTH;
-			uint8_t y = rand() % SH1106_HEIGHT;
-
-			sh1106_invert_pixel(disp, x, y);
-		}
+		int x0 = rand() % SH1106_WIDTH, y0 = rand() % SH1106_HEIGHT;
+		int x1 = rand() % SH1106_WIDTH, y1 = rand() % SH1106_HEIGHT;
+		sh1106_draw_line(disp, x0, y0, x1, y1, SH1106_INVERT);
 		sh1106_flush(disp);
-	}
-}
-
-void demo4(sh1106_t *disp) {
-	assert(disp);
-
-	srand(get_absolute_time());
-	while (true) {
-		for (int y = 0; y < SH1106_HEIGHT; y++) {
-			for (int x = 0; x < SH1106_WIDTH; x++) {
-				sh1106_draw_pixel(disp, x, y);
-			}
-			sh1106_flush(disp);
-			// uint8_t x = rand() % SH1106_WIDTH;
-			// uint8_t y = rand() % SH1106_HEIGHT;
-
-			// sh1106_invert_pixel(disp, x, y);
-		}
-		sleep_ms(100);
-		sh1106_clear_screen(disp);
-		sh1106_flush(disp);
+		sleep_ms(50);
 	}
 }
 
@@ -137,7 +67,7 @@ int main(void) {
 		return 0;
 	}
 
-	demo3(&display);
+	demo_draw_line(&display);
 
 	while (true) {
 		tight_loop_contents();
