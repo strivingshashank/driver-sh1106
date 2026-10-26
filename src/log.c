@@ -20,15 +20,15 @@ void _log(int level, const char *format, va_list args) {
 
 	switch (level) {
 	case LEVEL_INFO:
-		printf("%s >> ", "INFO");
+		printf("%s%s >> ", COLOR_GREEN, "INFO");
 		vprintf(format, args);
 		break;
 	case LEVEL_ERROR:
-		printf("%s >> ", "ERROR");
+		printf("%s%s >> ", COLOR_RED, "ERROR");
 		vprintf(format, args);
 		break;
 	case LEVEL_DEBUG:
-		printf("%s >> ", "DEBUG");
+		printf("%s%s >> ", COLOR_YELLOW, "DEBUG");
 		vprintf(format, args);
 		break;
 	default:
@@ -36,7 +36,7 @@ void _log(int level, const char *format, va_list args) {
 		break;
 	}
 
-	printf("\n");
+	printf("%s\n", COLOR_RESET);
 }
 
 void log_debug(const char *format, ...) {
