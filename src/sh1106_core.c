@@ -150,21 +150,35 @@ void sh1106_set_contrast(const sh1106_t *disp, uint8_t level) {
 	sh1106_write_cmd_stream(disp, cmds, sizeof(cmds));
 }
 
-void sh1106_fill_screen(sh1106_t *disp) {
+void sh1106_set_screen(sh1106_t *disp, sh1106_color_t color) {
 	assert(disp);
-	memset(disp->buffer, 0xFF, sizeof(disp->buffer));
-}
 
-void sh1106_clear_screen(sh1106_t *disp) {
-	assert(disp);
-	memset(disp->buffer, 0, sizeof(disp->buffer));
+	if (color == SH1106_INVERT) {
+		uint8_t *byte_buffer = (uint8_t *)disp->buffer;
+		size_t len = sizeof(disp->buffer);
+		for (size_t i = 0; i < len; i++) {
+			byte_buffer[i] = ~byte_buffer[i];
+		}
+		return;
+	}
+
+	switch (color) {
+	case SH1106_BLACK:
+		memset(disp->buffer, 0, sizeof(disp->buffer));
+		break;
+	case SH1106_WHITE:
+		memset(disp->buffer, 0xFF, sizeof(disp->buffer));
+		break;
+	default:
+		break;
+	}
 }
 
 void sh1106_set_pixel(sh1106_t *disp, int x, int y, sh1106_color_t color) {
 	assert(disp);
 
 	sh1106_display_pos_t pos = {0};
-	if (sh1106_get_pos(x, y, &pos)) {
+	if (!sh1106_get_pos(x, y, &pos)) {
 		return;
 	}
 

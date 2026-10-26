@@ -48,15 +48,15 @@ void sh1106_display_off(const sh1106_t *disp);
  */
 void sh1106_set_contrast(const sh1106_t *disp, uint8_t level);
 
-/* Turns ON all the pixels in the buffer.
- */
-void sh1106_fill_screen(sh1106_t *disp);
-
-/* Turns OFF all the pixels in the buffer. */
-void sh1106_clear_screen(sh1106_t *disp);
+/* Set a `sh1106_color_t` for the entire display.
+ * Any unknown color is ignored.
+ * Writes to buffer, use `sh1106_flush` to send to display.
+ */void sh1106_set_screen(sh1106_t *disp, sh1106_color_t color);
 
 /* Set a `sh1106_color_t` for a pixel.
  * If pixel is out of bound, it is ignored.
+ * Any out-of-bound index or unknown color is ignored.
+ * Writes to buffer, use `sh1106_flush` to send to display.
  */
 void sh1106_set_pixel(sh1106_t *disp, int x, int y, sh1106_color_t color);
 
